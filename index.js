@@ -1,7 +1,9 @@
 const express = require('express')
 const app = express()
+const cookieParser = require('cookie-parser');
 const port = 3000;
 const bodyParser = require('body-parser');
+app.use(cookieParser());
 app.use(bodyParser.json());
 // const mysql = require('mysql');
 const queryExec = require('./Model/configDb');
