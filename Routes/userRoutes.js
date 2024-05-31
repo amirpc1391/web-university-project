@@ -55,4 +55,25 @@ userRoutes.get("/delete",middleware.authenticateToken ,async (req, res)=>{
             data: {y}
         });
 });
+userRoutes.get("/get",middleware.authenticateToken ,async (req, res)=>{
+    const userId = await helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY)
+
+    const _user = await userModel.selectUser("uid",userId);
+
+    if (!_user.length){
+        return res.status(404).json(
+            {
+                "status": "failed",
+                "message": "username not exists",
+                data: {}
+            });
+    }
+
+    return res.status(201).json(
+        {
+            "status": "success",
+            "message": "username founded",
+            data: {_user}
+        });
+});
 module.exports=userRoutes

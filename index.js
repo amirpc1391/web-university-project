@@ -11,6 +11,8 @@ const auth = require("./Routes/auth.js");
 app.use("/user", auth);
 const userRoutes = require("./Routes/userRoutes");
 app.use("/user", userRoutes);
+const listRoutes = require("./Routes/listRoutes");
+app.use("/list", listRoutes);
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
