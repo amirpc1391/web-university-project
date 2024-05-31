@@ -9,6 +9,8 @@ app.use(bodyParser.json());
 const queryExec = require('./Model/configDb');
 const auth = require("./Routes/auth.js");
 app.use("/user", auth);
+const userRoutes = require("./Routes/userRoutes");
+app.use("/user", userRoutes);
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })

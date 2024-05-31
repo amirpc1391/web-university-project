@@ -1,5 +1,5 @@
 const express = require("express");
-const userRoutes = express.Router();
+const auth = express.Router();
 const userModel= require("../Model/usersModel")
 const jwt = require("jsonwebtoken");
 const middleware =require("../helper/middleware")
@@ -7,7 +7,7 @@ const helpfunc =require("../helper/helpfunc")
 // const bcrypt = require("bcrypt");
 // const SECRET_KEY ="24688642"
 require('dotenv').config();
-userRoutes.get("/signup",async (req, res)=>{
+auth.get("/signup",async (req, res)=>{
     const x = await userModel.selectUser("username",req.body.username);
     // console.log(x)
     if (x.length){
@@ -26,7 +26,7 @@ userRoutes.get("/signup",async (req, res)=>{
             data: {y}
         });
 });
-userRoutes.get("/signin",async (req, res)=>{
+auth.get("/signin",async (req, res)=>{
     const _user= await userModel.selectUser("username",req.body.username);
     console.log(_user)
     if (!_user.length){
@@ -47,6 +47,7 @@ userRoutes.get("/signin",async (req, res)=>{
             });
     }
     const token = jwt.sign({
+        uid: _user[0].uid,
         username: _user[0].username,
         role:_user[0].role
     }, process.env.SECRET_KEY, {
@@ -100,12 +101,12 @@ userRoutes.get("/signin",async (req, res)=>{
     //         accessToken: {token},
     //     });
 });
-userRoutes.get('/logout', (req, res) => {
+auth.get('/logout', (req, res) => {
     res.clearCookie('token', { path: '/' });
     res.status(201).json({ message: 'Logout successful' });
 });
 
-userRoutes.get('/protected-route', middleware.authenticateToken, (req, res) => {
+auth.get('/protected-route', middleware.authenticateToken, (req, res) => {
     res.json({ message: 'Protected data', user: req.user });
 });
 
@@ -208,7 +209,7 @@ userRoutes.get('/protected-route', middleware.authenticateToken, (req, res) => {
 
 
 
-userRoutes.get('/t', (req, res) => {
+auth.get('/t', (req, res) => {
     // let test;
     helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY).then(user => {
         console.log(user); // خروجی: 'amir16'
@@ -235,4 +236,4 @@ userRoutes.get('/t', (req, res) => {
         }
     )
 });
-module.exports = userRoutes;
+module.exports = auth;

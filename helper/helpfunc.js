@@ -13,7 +13,7 @@ exports.getUserNameOfToken=(token,secret_key)=>{
                 reject({status:"failed", message: 'Invalid token', error: err });
             }
             console.log(_user)
-            resolve(_user.username);
+            resolve(_user.uid);
         });
     })
 }
