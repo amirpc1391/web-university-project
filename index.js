@@ -7,15 +7,8 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 // const mysql = require('mysql');
 const queryExec = require('./Model/configDb');
-const userRoutes = require("./Routes/userRoutes");
-
-app.use("/user", userRoutes);
-
-// queryExec("create database amir");
-// app.get('/', (req, res) => {
-//     res.send('Hello World!')
-// })
-
+const auth = require("./Routes/auth.js");
+app.use("/user", auth);
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
