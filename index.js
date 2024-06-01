@@ -13,6 +13,8 @@ const userRoutes = require("./Routes/userRoutes");
 app.use("/user", userRoutes);
 const listRoutes = require("./Routes/listRoutes");
 app.use("/list", listRoutes);
+const taskRoutes = require("./Routes/taskRoutes");
+app.use("/task", taskRoutes);
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
