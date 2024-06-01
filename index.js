@@ -15,6 +15,8 @@ const listRoutes = require("./Routes/listRoutes");
 app.use("/list", listRoutes);
 const taskRoutes = require("./Routes/taskRoutes");
 app.use("/task", taskRoutes);
+const reportRoutes = require("./Routes/reportRoutes");
+app.use("/report", reportRoutes);
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
