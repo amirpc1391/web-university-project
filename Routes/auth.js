@@ -7,7 +7,7 @@ const helpfunc =require("../helper/helpfunc")
 // const bcrypt = require("bcrypt");
 // const SECRET_KEY ="24688642"
 require('dotenv').config();
-auth.get("/signup",async (req, res)=>{
+auth.post("/signup",async (req, res)=>{
     const x = await userModel.selectUser("username",req.body.username);
     // console.log(x)
     if (x.length){
@@ -26,7 +26,7 @@ auth.get("/signup",async (req, res)=>{
             data: {y}
         });
 });
-auth.get("/signin",async (req, res)=>{
+auth.post("/signin",async (req, res)=>{
     const _user= await userModel.selectUser("username",req.body.username);
     console.log(_user)
     if (!_user.length){
@@ -57,6 +57,7 @@ auth.get("/signin",async (req, res)=>{
     // res.json({ message: 'Login successful', token });
     return res.status(201).json({
         // user:_user[0],
+        status:"success",
         message: "Login successful",
         accessToken: {token},
     });
@@ -101,12 +102,12 @@ auth.get("/signin",async (req, res)=>{
     //         accessToken: {token},
     //     });
 });
-auth.get('/logout', (req, res) => {
+auth.post('/logout', (req, res) => {
     res.clearCookie('token', { path: '/' });
     res.status(201).json({ message: 'Logout successful' });
 });
 
-auth.get('/protected-route', middleware.authenticateToken, (req, res) => {
+auth.post('/protected-route', middleware.authenticateToken, (req, res) => {
     res.json({ message: 'Protected data', user: req.user });
 });
 

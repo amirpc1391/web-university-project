@@ -3,6 +3,8 @@ const app = express()
 const cookieParser = require('cookie-parser');
 const port = 3000;
 const bodyParser = require('body-parser');
+const cors = require('cors');
+app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
 // const mysql = require('mysql');
@@ -20,5 +22,3 @@ app.use("/report", reportRoutes);
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
-
-
