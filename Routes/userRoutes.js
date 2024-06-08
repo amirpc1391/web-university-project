@@ -3,7 +3,7 @@ const userRoutes = express.Router();
 const userModel = require("../Model/usersModel");
 const middleware = require("../helper/middleware")
 const helpfunc = require("../helper/helpfunc")
-userRoutes.get("/update",middleware.authenticateToken ,async (req, res)=>{
+userRoutes.post("/update",middleware.authenticateToken ,async (req, res)=>{
     const userId = await helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY)
 
     const _user = await userModel.selectUser("uid",userId);
@@ -17,7 +17,9 @@ userRoutes.get("/update",middleware.authenticateToken ,async (req, res)=>{
                 data: {}
             });
     }
-    if (await userModel.selectUser("username",req.body.username).length)
+    const userObg =await userModel.selectUser("username",req.body.username);
+    console.log(userObg)
+    if (userObg.length && userObg[0].username!=_user[0].username)
     {
         return res.status(401).json(
             {
@@ -34,7 +36,7 @@ userRoutes.get("/update",middleware.authenticateToken ,async (req, res)=>{
             data: {y}
         });
 });
-userRoutes.get("/delete",middleware.authenticateToken ,async (req, res)=>{
+userRoutes.post("/delete",middleware.authenticateToken ,async (req, res)=>{
     const userId = await helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY)
 
     const _user = await userModel.selectUser("uid",userId);
@@ -55,7 +57,7 @@ userRoutes.get("/delete",middleware.authenticateToken ,async (req, res)=>{
             data: {y}
         });
 });
-userRoutes.get("/get",middleware.authenticateToken ,async (req, res)=>{
+userRoutes.post("/get",middleware.authenticateToken ,async (req, res)=>{
     const userId = await helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY)
 
     const _user = await userModel.selectUser("uid",userId);
@@ -73,7 +75,7 @@ userRoutes.get("/get",middleware.authenticateToken ,async (req, res)=>{
         {
             "status": "success",
             "message": "username founded",
-            data: {_user}
+            data: {"user":_user[0]}
         });
 });
 module.exports=userRoutes

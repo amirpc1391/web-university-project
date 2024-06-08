@@ -53,7 +53,7 @@ auth.post("/signin",async (req, res)=>{
     }, process.env.SECRET_KEY, {
         expiresIn: '1h'
     });
-    res.cookie('token', token, { httpOnly: true, secure: true, path: '/' });
+    res.cookie('token', token, { httpOnly: true,  sameSite: 'None', secure: true, path: '/' });
     // res.json({ message: 'Login successful', token });
     return res.status(201).json({
         // user:_user[0],
@@ -108,7 +108,7 @@ auth.post('/logout', (req, res) => {
 });
 
 auth.post('/protected-route', middleware.authenticateToken, (req, res) => {
-    res.json({ message: 'Protected data', user: req.user });
+    return res.status(201).json({ message: 'Protected data', user: req.user });
 });
 
 // userRoutes.get("/aa",async (req, res)=>{
