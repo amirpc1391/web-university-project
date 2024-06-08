@@ -6,7 +6,7 @@ const taskModel = require("../Model/taskModel");
 const middleware = require("../helper/middleware")
 const helpfunc = require("../helper/helpfunc")
 
-taskRoutes.get("/insert",async (req, res)=>{
+taskRoutes.post("/insert",middleware.authenticateToken,async (req, res)=>{
     const userId = await helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY)
     const _user = await userModel.selectUser("uid",userId);
     // console.log(_user)
@@ -28,7 +28,7 @@ taskRoutes.get("/insert",async (req, res)=>{
             });
     }
     if (_list[0].uid!== userId){
-        return res.status(201).json(
+        return res.status(403).json(
             {
                 "status": "failed",
                 "message": "you cant add task to the list because you are not owner this list",
@@ -41,10 +41,10 @@ taskRoutes.get("/insert",async (req, res)=>{
         {
             "status": "success",
             "message": "task inserted",
-            data: {_task}
+            data: {"task":_task}
         });
 });
-taskRoutes.get("/get",middleware.authenticateToken ,async (req, res)=>{
+taskRoutes.post("/get",middleware.authenticateToken ,async (req, res)=>{
     const userId = await helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY);
 
     const _user = await userModel.selectUser("uid",userId);
@@ -80,10 +80,10 @@ taskRoutes.get("/get",middleware.authenticateToken ,async (req, res)=>{
         {
             "status": "success",
             "message": "_task geted",
-            data: {_task}
+            data: {"task":_task}
         });
 });
-taskRoutes.get("/update",middleware.authenticateToken ,async (req, res)=>{
+taskRoutes.post("/update",middleware.authenticateToken ,async (req, res)=>{
     const userId = await helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY);
 
     const _user = await userModel.selectUser("uid",userId);
@@ -131,7 +131,7 @@ taskRoutes.get("/update",middleware.authenticateToken ,async (req, res)=>{
             data: {_taskup}
         });
 });
-taskRoutes.get("/delete",middleware.authenticateToken ,async (req, res)=>{
+taskRoutes.post("/delete",middleware.authenticateToken ,async (req, res)=>{
     const userId = await helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY);
     const _user = await userModel.selectUser("uid",userId);
     if (!_user.length){

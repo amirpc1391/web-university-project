@@ -7,7 +7,7 @@ const reportModel = require("../Model/reportModel");
 const middleware = require("../helper/middleware")
 const helpfunc = require("../helper/helpfunc")
 
-reportRoutes.get("/insert",async (req, res)=>{
+reportRoutes.post("/insert",async (req, res)=>{
     const userId = await helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY)
     const _user = await userModel.selectUser("uid",userId);
     // console.log(_user)
@@ -56,7 +56,7 @@ reportRoutes.get("/insert",async (req, res)=>{
             data: {report}
         });
 });
-reportRoutes.get("/get",middleware.authenticateToken ,async (req, res)=>{
+reportRoutes.post("/get",middleware.authenticateToken ,async (req, res)=>{
     const userId = await helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY);
 
     const _user = await userModel.selectUser("uid",userId);
@@ -104,7 +104,7 @@ reportRoutes.get("/get",middleware.authenticateToken ,async (req, res)=>{
             data: {_report}
         });
 });
-reportRoutes.get("/update",middleware.authenticateToken ,async (req, res)=>{
+reportRoutes.post("/update",middleware.authenticateToken ,async (req, res)=>{
     const userId = await helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY);
 
     const _user = await userModel.selectUser("uid",userId);
@@ -161,7 +161,7 @@ reportRoutes.get("/update",middleware.authenticateToken ,async (req, res)=>{
             data: {_reportup}
         });
 });
-reportRoutes.get("/delete",middleware.authenticateToken ,async (req, res)=>{
+reportRoutes.post("/delete",middleware.authenticateToken ,async (req, res)=>{
     const userId = await helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY);
     const _user = await userModel.selectUser("uid",userId);
     if (!_user.length){

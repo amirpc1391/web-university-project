@@ -5,7 +5,7 @@ const listModel = require("../Model/listModel");
 const middleware = require("../helper/middleware")
 const helpfunc = require("../helper/helpfunc")
 
-listRoutes.get("/insert",async (req, res)=>{
+listRoutes.post("/insert",middleware.authenticateToken ,async (req, res)=>{
     const userId = await helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY)
     const _user = await userModel.selectUser("uid",userId);
     console.log(_user)
@@ -26,7 +26,7 @@ listRoutes.get("/insert",async (req, res)=>{
             data: {_list}
         });
 });
-listRoutes.get("/get",middleware.authenticateToken ,async (req, res)=>{
+listRoutes.post("/get",middleware.authenticateToken ,async (req, res)=>{
     const userId = await helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY)
 
     const _list = await listModel.selectList("uid",userId);
@@ -44,10 +44,10 @@ listRoutes.get("/get",middleware.authenticateToken ,async (req, res)=>{
         {
             "status": "success",
             "message": "list geted",
-            data: {_list}
+            data: {"list":_list}
         });
 });
-listRoutes.get("/update",middleware.authenticateToken ,async (req, res)=>{
+listRoutes.post("/update",middleware.authenticateToken ,async (req, res)=>{
     const userId = await helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY)
     const _user = await userModel.selectUser("uid",userId);
 
@@ -86,7 +86,7 @@ listRoutes.get("/update",middleware.authenticateToken ,async (req, res)=>{
             data: {y}
         });
 });
-listRoutes.get("/delete",middleware.authenticateToken ,async (req, res)=>{
+listRoutes.post("/delete",middleware.authenticateToken ,async (req, res)=>{
     const userId = await helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY);
     const _user = await userModel.selectUser("uid",userId);
 
