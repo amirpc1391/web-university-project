@@ -101,7 +101,7 @@ reportRoutes.post("/get",middleware.authenticateToken ,async (req, res)=>{
         {
             "status": "success",
             "message": "report geted",
-            data: {_report}
+            data: {"report":_report}
         });
 });
 reportRoutes.post("/update",middleware.authenticateToken ,async (req, res)=>{

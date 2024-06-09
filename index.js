@@ -11,7 +11,6 @@ app.use(cors({
 }));
 app.use(cookieParser());
 app.use(bodyParser.json());
-// const mysql = require('mysql');
 const queryExec = require('./Model/configDb');
 const auth = require("./Routes/auth.js");
 app.use("/user", auth);
@@ -23,6 +22,8 @@ const taskRoutes = require("./Routes/taskRoutes");
 app.use("/task", taskRoutes);
 const reportRoutes = require("./Routes/reportRoutes");
 app.use("/report", reportRoutes);
+const statusRoutes = require("./Routes/statusRoutes");
+app.use("/status", statusRoutes);
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
