@@ -7,11 +7,6 @@ const connecting = mysql.createConnection({
     database: "taskdb"
 });
 function queryExec(querys) {
-    // console.log(querys);
-    // connecting.connect( (err)=>{
-    //     if (err) throw err;
-    //     console.log("Connected!");
-    // })
     return new Promise((resolve ,reject)=> {
         connecting.query(querys, (err, result) => {
             if (err){

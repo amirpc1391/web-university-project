@@ -48,7 +48,7 @@ taskRoutes.post("/get",middleware.authenticateToken ,async (req, res)=>{
     const userId = await helpfunc.getUserNameOfToken(req.cookies.token,process.env.SECRET_KEY);
 
     const _user = await userModel.selectUser("uid",userId);
-    // console.log(_user)
+
     if (!_user.length){
         return res.status(404).json(
             {

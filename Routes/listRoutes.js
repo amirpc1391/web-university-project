@@ -31,15 +31,6 @@ listRoutes.post("/get",middleware.authenticateToken ,async (req, res)=>{
 
     const _list = await listModel.selectList("uid",userId);
 
-    // if (!_list.length){
-    //     return res.status(404).json(
-    //         {
-    //             "status": "failed",
-    //             "message": "list not exists",
-    //             data: {}
-    //         });
-    // }
-
     return res.status(201).json(
         {
             "status": "success",

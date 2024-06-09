@@ -1,6 +1,5 @@
 const express = require("express");
 const statusRoutes = express.Router();
-const userModel = require("../Model/usersModel");
 const statusModel = require("../Model/statusModel");
 const middleware = require("../helper/middleware")
 const helpfunc = require("../helper/helpfunc")
